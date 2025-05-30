@@ -16,12 +16,12 @@ set $right l
 # Your preferred terminal emulator
 set $term foot
 # Your preferred application launcher
-set $menu wmenu-run
+set $menu rofi -show combi -combi-modes "drun,run,window" -modes combi
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/addilyz/.config/sway/opbg.jpg fill
+output * bg /home/add/.config/sway/love.jpg fill
 #
 # Example configuration:
 #
@@ -34,13 +34,15 @@ output * bg /home/addilyz/.config/sway/opbg.jpg fill
 # Example configuration:
 #
 exec swayidle -w \
-          timeout 300 'swaylock -f -c 000000' \
-          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+          timeout 900 'swaylock -f -c 000000' \
+          timeout 1800 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
           before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+
+exec lxpolkit
 
 ### Input configuration
 #
@@ -67,8 +69,8 @@ exec swayidle -w \
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    # bindsym $mod+d exec $menu
-    bindsym $mod+d exec "dmenu_run -nf '#5F3860' -nb '#EAB2C4' -sb '#BF7795' -sf '#5F3860' -fn 'monospace-10' -p 'dmenu prompt >'"
+    bindsym $mod+d exec $menu
+    # bindsym $mod+d exec "dmenu_run -nf '#5F3860' -nb '#EAB2C4' -sb '#BF7795' -sf '#5F3860' -fn 'monospace-10' -p 'dmenu prompt >'"
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
@@ -192,7 +194,7 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
+    bindsym $mod+r mode "resize"
 #
 # Utilities:
 #
@@ -213,11 +215,11 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-
+    swaybar_command waybar
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X ['$(cat /sys/class/power_supply/BAT0/capacity)'%]'; do sleep 1; done
-    # status_command while date+[$(cat /sys/class/power_supply/BAT0/capacity)%]'[ %Y-%m-%d %X]'; do sleep 1; done
+   # status_command while date +'%Y-%m-%d %X ['$(cat /sys/class/power_supply/BAT0/capacity)'%]'; do sleep 1; done
+    status_command while date+[$(cat /sys/class/power_supply/BAT0/capacity)%]'[ %Y-%m-%d %X]'; do sleep 1; done
     colors {
         statusline #000000
         background #EAB2C4
@@ -225,6 +227,7 @@ bar {
 	    focused_workspace #d192c9 #EAB2C4 #000000
     }
 }
+gaps inner 10
 
 # class                 border  bground text    indicator child_border
 client.focused          #979927 #EAB2C4 #5F3860 #2E9EF4   #285577
